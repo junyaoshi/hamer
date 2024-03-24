@@ -4,6 +4,7 @@ import argparse
 import os
 import cv2
 import numpy as np
+from tqdm.auto import tqdm
 
 from hamer.configs import CACHE_DIR_HAMER
 from hamer.models import HAMER, download_models, load_hamer, DEFAULT_CHECKPOINT
@@ -74,7 +75,7 @@ def main():
     img_paths = [img for end in args.file_type for img in Path(args.img_folder).glob(end)]
 
     # Iterate over all images in folder
-    for img_path in img_paths:
+    for img_path in tqdm(img_paths, desc='Processing images', total=len(img_paths)):
         img_cv2 = cv2.imread(str(img_path))
 
         # Detect humans in image
